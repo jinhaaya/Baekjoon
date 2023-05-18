@@ -1,0 +1,10 @@
+{
+    "files.associations": {
+        "array": "cpp",
+        "string": "cpp",
+        "ratio": "cpp",
+        "cmath": "cpp",
+        "complex": "cpp",
+        "tuple": "cpp"
+    }
+}
