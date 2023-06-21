@@ -1,36 +1,36 @@
 import sys
-import copy
+import math
+INF = math.inf
 
 N = int(sys.stdin.readline())
 M = int(sys.stdin.readline())
-bus = [0 for _ in range(N+1)]
+
+bus = [[INF for _ in range(N)] for _ in range(N)]
+for i in range(N) : bus[i][i] = 0
 for _ in range(M) :
-    a, b, w = map(int, sys.stdin.readline().split())
-    if bus[a] == 0 :
-        bus[a] = [[b,w]]
-    else :
-        bus[a].append([b,w])
+    a, b, cost = map(int, sys.stdin.readline().split())
+    bus[a-1][b-1] = min(cost, bus[a-1][b-1])
+    # bus[a-1][b-1] = cost
+start, goal = map(int, sys.stdin.readline().split())
+start -= 1
+goal -= 1
 
-a, b = map(int, sys.stdin.readline().split())
+if start == goal :
+    print(0)
+    exit()
 
-def dfs(cur, visited) :
-    if cur == b : return 0
-    if bus[cur] == 0 : return 200000000
-    min_weight = 200000000
-    for way in bus[cur] :
-        dest = way[0]
-        weight = way[1]
+distance = [INF for _ in range(N)]
+distance[start] = 0
+visited = [0 for _ in range(N)]
+temp = [0 for _ in range(N)]
 
-        if dest in visited : continue
-
-        temp_visited = copy.deepcopy(visited)
-        temp_visited[cur] = 1
-        next_weight = weight + dfs(dest, temp_visited)
-        if next_weight >= 200000000 : continue
-
-        min_weight = min(min_weight, next_weight)
-    return min_weight
-
-dictionary = {}
-dictionary[a] = 1
-print(dfs(a, dictionary))
+i = 0
+for i in range(N) :
+    for j in range(N) :
+        temp[j] = distance[j] + visited[j]
+    mid = temp.index(min(temp))
+    for j in range(N) :
+        distance[j] = min(distance[j], distance[mid] + bus[mid][j])
+    visited[mid] = math.inf
+    # print(mid, distance)
+print(distance[goal])
