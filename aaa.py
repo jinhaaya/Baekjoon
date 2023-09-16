@@ -1,1 +1,1 @@
-print('aa')
+print(-1%4)
