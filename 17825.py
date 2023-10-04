@@ -23,6 +23,7 @@ for i, v in enumerate(yoot_map_4):
 
 
 print(yoot_dict)
+heap = deque()
 def BFS(num):
     for d in dice_position:
         cur_pos_score = 0
@@ -32,4 +33,5 @@ def BFS(num):
             cur_pos_score = 0
         elif d_pos+dice[num] < len(yoot_dict[d_map_num]):
             cur_pos_score = yoot_dict[d_map_num][d_pos+dice[num]]
+        heap.append([])
 
